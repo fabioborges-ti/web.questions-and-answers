@@ -1,0 +1,57 @@
+body {
+  background-color: #F9F9F9;
+}
+
+nav {
+  margin-bottom: 20pt;
+}
+
+footer {
+  text-align: center;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  font-size: small;
+  color: #999999;
+}
+
+hr {
+  border-top: 1px dashed lightgray;
+}
+
+.jumbotron {
+  background-color: #F2F2F2;
+}
+
+.header { 
+  padding-bottom: 10px;
+}
+
+.footer {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-align: center;
+  font-size: small;
+  color: #999999;
+  font-weight: lighter;
+}
+
+.media {
+  margin-bottom: 10pt;
+}
+
+.card {
+  margin-bottom: 5vh;
+}
+
+.card-header {
+  background-color: #F2F2F2;
+}
+
+.card-body {
+  background-color: #FFF;
+}
+
+.card-footer {
+  background-color: #F2F2F2;
+  font-size: 8pt;
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include ('../partials/header.ejs'); %>
+<body>
+  <%- include ('../partials/navbar.ejs'); %>
+  <div class="container">
+    <div class="row header">
+      <div class="col">
+        <h3>Edit question</h3>
+      </div>
+      <div class="col" style="text-align: right;">
+        <a href="/" class="btn btn-primary btn-sm">Home</a>
+      </div>
+    </div>
+    <% if (typeof updated != 'undefined') { %>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Great!</strong> Ask updated successfully
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>  
+    <%  } %>
+    <div class="card">
+      <div class="card-body">
+        <form method="POST" action="/questions/edit">
+          <div class="form-group">
+            <label for="title" class="form-label">Title</label>
+            <input name="title" type="text" id="title" placeholder="Title" class="form-control" value="<%= question.title%>" />
+          </div>
+          <div class="form-group">
+            <label for="description" class="form-label">Describe your question</label>
+            <textarea name="description" id="description" placeholder="Type here" class="form-control" rows="5"><%= question.description %></textarea>
+          </div>
+          <button class="btn btn-primary btn-sm" id="btnConfirm">Save</button>
+          <input type="hidden" name="questionId" id="questionId" value="<%= question.id %>">
+        </form>
+      </div>
+    </div>
+    <%- include ('../partials/footer.ejs'); %>
+  </div>
+</body>
+<%- include ('../partials/scripts.ejs'); %>
+</html>

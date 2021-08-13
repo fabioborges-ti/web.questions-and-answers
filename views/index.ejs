@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include ('./partials/header.ejs'); %>
+<body>
+  <%- include ('./partials/navbar.ejs'); %>
+  <div class="container">
+    <div class="jumbotron shadow p-3 mb-5 rounded">
+      <h1 class="display-4">Questions & Answers A to Z!</h1>
+      <p class="lead">Test your understanding with practical system development problems and step-by-step solutions.</p>
+      <hr class="my-4">
+      <p>Browse through all registered questions and good studies.</p>
+      <a class="btn btn-primary btn-lg" href="questions/add" role="button">Ask a question</a>
+    </div>
+    <% data.forEach(item => { %>
+      <div class="card">
+        <div class="card-header border-light">
+          <div class="row">
+            <div class="col-10">
+              <%= item.title %>
+            </div>
+            <div class="col-2" style="text-align: right;">
+              <span style="font-size: x-small; color: grey;">
+                <i class="far fa-calendar-alt"></i>
+                Published on <%= ((item.createdAt.getDate())) + "/" + ((item.createdAt.getMonth() + 1)) + "/" + item.createdAt.getFullYear(); %>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="card-body border-light">
+          <em style="color: grey;"><i class="fas fa-quote-left"></i> <%= item.description %></em>
+        </div>
+        <div class="card-footer border-light">
+          <div class="row">
+            <div class="col">
+              <a href="/questions/open/<%= item.id %>" class="btn btn-primary btn-sm">Reply</a>
+            </div>
+            <div class="col" style="text-align: right;">
+              <a href="/questions/edit/<%= item.id %>" class="btn btn-secondary btn-sm"><i class="fas fa-pen-alt"></i></a>
+              <button type="button" class="btn btn-secondary btn-sm removeQuestion" data-toggle="modal" data-target="#exampleModal" value="<%= item.id %>">
+                <i class="far fa-trash-alt"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Do you confirm deleting this question and all associated responses?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+            <button type="button" class="btn btn-primary" id="confirm">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- -->
+    <form id="deleteForm" method="POST" action="/questions/remove">
+      <input type="hidden" name="questionId" id="questionId" value="" />
+    </form>
+    <!-- -->
+    <%- include ('./partials/footer.ejs'); %>
+  </div>
+</body>
+<%- include ('./partials/scripts.ejs'); %>
+</html>

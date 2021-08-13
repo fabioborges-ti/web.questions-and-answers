@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include ('../partials/header.ejs'); %>
+<body>
+  <%- include ('../partials/navbar.ejs'); %>
+  <div class="container">
+    <div class="row header">
+      <div class="col">
+        <h3>Reply to the question #<%= question.id %></h3>
+      </div>
+      <div class="col" style="text-align: right;">
+        <a href="/" class="btn btn-primary btn-sm">Home</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col">
+            <h4><%= question.title %></h4>
+          </div>
+          <div class="col-2" style="text-align: right;">
+            <span style="font-size: x-small; color: grey;">
+              <i class="far fa-calendar-alt"></i>
+              Published on <%= ((question.createdAt.getDate())) + "/" + ((question.createdAt.getMonth() + 1)) + "/" + question.createdAt.getFullYear(); %>
+            </span>  
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <span style="color: grey;">
+              <i class="fas fa-quote-left"></i> 
+              <em><%= question.description %></em>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body border-light">
+        <form method="POST" action="../../questions/addReply">
+          <div class="form-group">
+            <label for="reply" class="form-label">Describe your answer</label>
+            <textarea name="reply" id="reply" placeholder="Type here" class="form-control" rows="5"></textarea>
+          </div>
+          <button class="btn btn-primary btn-sm" id="btnReply">Reply</button>
+          <input type="hidden" name="questionId" id="questionId" value="<%= question.id %>" />  
+        </form>
+      </div>
+    </div>
+    <!-- REPLIES LIST -->
+    <% replies.forEach(item => { %>
+      <div class="media">
+        <i class="mr-3 	fas fa-share" style="color: darkgrey;"></i>
+        <div class="media-body">
+          <p style="color: gray; font-size: small;">
+            <em><%= item.reply %></em>
+          </p>
+          <div class="row">
+            <div class="col">
+              <button type="button" class="btn btn-secondary btn-sm removeReply" data-toggle="modal" data-target="#exampleModal" value="<%= item.id %>">
+                <i class="far fa-trash-alt"></i>
+              </button>
+            </div>
+            <div class="col" style="text-align: right;">
+              <span style="font-size: x-small; color: grey;">
+                <i class="far fa-calendar-alt"></i>
+                <em>Published on <%= ((item.createdAt.getDate())) + "/" + ((item.createdAt.getMonth() + 1)) + "/" + item.createdAt.getFullYear(); %></em>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+    <% }) %>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Do you confirm deleting this reply?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+            <button type="button" class="btn btn-primary" id="confirm">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- -->
+    <form id="deleteForm" method="POST" action="/replies/remove">
+      <input type="hidden" name="questionId" id="questionId" value="<%= question.id %>" />
+      <input type="hidden" name="replyId" id="replyId" value="" />
+    </form>
+    <!-- -->
+    <%- include ('../partials/footer.ejs'); %>
+  </div>   
+</body>
+<%- include ('../partials/scripts.ejs'); %>
+</html>
